@@ -1,0 +1,11 @@
+function dudt = rhsBurgers1b(t,u,L)
+a = 0.1;
+N = length(u);
+uhat = fft(u);
+kappa = (2*pi/L)*[-N/2:N/2-1];
+kappa = fftshift(kappa');
+duhat = 1i*kappa.*uhat;
+dduhat = -(kappa.^2).*uhat;
+du = ifft(duhat);
+ddu = ifft(dduhat);
+dudt = -u.*du + a*ddu;
